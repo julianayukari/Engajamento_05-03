@@ -10,16 +10,14 @@ import java.util.Iterator;
 
 
 public class App {
-
+    
     private static Scanner sc = new Scanner(System.in);
     private static Set<Aluno> listaAlunos = new HashSet<Aluno>();
-    //aceita apenas valores únicos e é mais rapido porem não ordena 
-
+   
     public static void main(String[] args) {
-
         int i = 0;
         String option;
-
+    
         do {
 
             System.out.println("\n----- Menu -----");
@@ -41,13 +39,31 @@ public class App {
             }
         } while (!option.equals("0"));
     }
-
+    
     private static void inserirAluno() {
         System.out.println("Insira o nome: ");
         String nome = sc.nextLine();
-        listaAlunos.add(new Aluno(nome));
+        if(verificaNomeExistente(nome)){
+            listaAlunos.add(new Aluno(nome));
+        }else{
+            System.out.println("\n NOME JA CADASTRADO! \n");
+        }
+        
+   }
+    
+    private static boolean verificaNomeExistente(String nome){
+        Iterator<Aluno> i = listaAlunos.iterator();
+        while (i.hasNext()){
+            Aluno nomes = i.next();
+            if(nomes.getNome().equals(nome)){
+                return false;
+            }   
+        }
+        return true;
+   
     }
-
+    
+    
     private static void exibirLista() {
         System.out.println("----- Lista de nomes -----");
         Iterator<Aluno> i = listaAlunos.iterator();
@@ -55,4 +71,5 @@ public class App {
             System.out.println(i.next()); 
         }
     }
+      
 }
